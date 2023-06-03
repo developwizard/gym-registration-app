@@ -7,6 +7,7 @@ import {CreateRegistrationComponent} from './create-registrarion/create-registra
 import {RegistrarionListComponent} from './registrarion-list/registrarion-list.component';
 import {UserDetailComponent} from './user-detail/user-detail.component';
 import {NgToastModule} from "ng-angular-popup";
+import {NgConfirmModule} from "ng-confirm-box";
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {NgToastModule} from "ng-angular-popup";
     BrowserModule,
     BrowserAnimationsModule,
     CreateRegistrationComponent,
+    NgConfirmModule,
     NgToastModule,
     RegistrarionListComponent,
     UserDetailComponent
