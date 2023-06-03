@@ -6,6 +6,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CreateRegistrationComponent} from './create-registrarion/create-registration.component';
 import {RegistrarionListComponent} from './registrarion-list/registrarion-list.component';
 import {UserDetailComponent} from './user-detail/user-detail.component';
+import {NgToastModule} from "ng-angular-popup";
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import {UserDetailComponent} from './user-detail/user-detail.component';
     BrowserModule,
     BrowserAnimationsModule,
     CreateRegistrationComponent,
+    NgToastModule,
     RegistrarionListComponent,
     UserDetailComponent
   ],
