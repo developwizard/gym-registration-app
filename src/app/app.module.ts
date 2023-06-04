@@ -11,12 +11,15 @@ import {NgConfirmModule} from "ng-confirm-box";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {RouterModule} from "@angular/router";
+import {AppRoutingModule} from "./app.routing.module";
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     CreateRegistrationComponent,
@@ -26,9 +29,11 @@ import {MatButtonModule} from "@angular/material/button";
     NgConfirmModule,
     NgToastModule,
     RegistrarionListComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
