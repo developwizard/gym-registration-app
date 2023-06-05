@@ -13,6 +13,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {RouterModule} from "@angular/router";
 import {AppRoutingModule} from "./app.routing.module";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {AppRoutingModule} from "./app.routing.module";
     BrowserModule,
     BrowserAnimationsModule,
     CreateRegistrationComponent,
+    HttpClientModule,
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
