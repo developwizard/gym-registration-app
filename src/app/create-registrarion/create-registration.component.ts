@@ -9,6 +9,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
+import {ApiService} from "../services/api.service";
+import {NgToastModule, NgToastService} from "ng-angular-popup";
 
 @Component({
   selector: 'app-create-registrarion',
@@ -25,6 +27,7 @@ import {MatButtonModule} from "@angular/material/button";
     MatNativeDateModule,
     MatRadioModule,
     MatSelectModule,
+    NgToastModule,
     ReactiveFormsModule
   ]
 })
@@ -41,7 +44,9 @@ export class CreateRegistrationComponent implements OnInit {
   ];
   registrationForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private apiService: ApiService,
+              private toastService: NgToastService) {
   }
 
   ngOnInit(): void {
@@ -62,27 +67,32 @@ export class CreateRegistrationComponent implements OnInit {
       enquiryDate: ['']
     });
 
-    this.registrationForm.controls['height'].valueChanges.subscribe(height => {
-      this.calculateBmi(height);
-    });
+    this.registrationForm.controls['height'].valueChanges
+      .subscribe(height => {
+        this.calculateBmi(height);
+      });
   }
 
   onSubmit() {
-    console.log(this.registrationForm.value);
+    this.apiService.postRegistration(this.registrationForm.value)
+      .subscribe(res => {
+        this.toastService.success({detail: "Success", summary: "Enquiry Added", duration: 3000});
+        this.registrationForm.reset();
+      });
   }
 
   calculateBmi(height: number) {
     const weight = this.registrationForm.value.weight;
     const bmi = weight / (height * height);
     this.registrationForm.controls['bmi'].patchValue(bmi);
-    switch(true) {
+    switch (true) {
       case bmi < 18.5:
         this.registrationForm.controls['bmiResult'].patchValue("Underweight");
         break;
       case bmi >= 18.5 && bmi < 25:
         this.registrationForm.controls['bmiResult'].patchValue("Normal");
         break;
-      case bmi >25 && bmi < 30:
+      case bmi > 25 && bmi < 30:
         this.registrationForm.controls['bmiResult'].patchValue("Overweight");
         break;
       default:
