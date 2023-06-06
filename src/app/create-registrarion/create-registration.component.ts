@@ -11,6 +11,8 @@ import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {ApiService} from "../services/api.service";
 import {NgToastModule, NgToastService} from "ng-angular-popup";
+import {ActivatedRoute, Router, RouterModule} from "@angular/router";
+import {User} from "../models/user.model";
 
 @Component({
   selector: 'app-create-registration',
@@ -28,7 +30,8 @@ import {NgToastModule, NgToastService} from "ng-angular-popup";
     MatRadioModule,
     MatSelectModule,
     NgToastModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ]
 })
 export class CreateRegistrationComponent implements OnInit {
@@ -43,9 +46,13 @@ export class CreateRegistrationComponent implements OnInit {
     "Fitness"
   ];
   registrationForm!: FormGroup;
+  public userIdToUpdate!: number;
+  public isUpdateActive: boolean = false;
 
   constructor(private fb: FormBuilder,
+              private activatedRoute: ActivatedRoute,
               private apiService: ApiService,
+              private router: Router,
               private toastService: NgToastService) {
   }
 
@@ -71,6 +78,15 @@ export class CreateRegistrationComponent implements OnInit {
       .subscribe(height => {
         this.calculateBmi(height);
       });
+
+    this.activatedRoute.params.subscribe(params => {
+      this.userIdToUpdate = params['id'];
+      this.apiService.getRegisteredUserById(this.userIdToUpdate)
+        .subscribe(user => {
+          this.isUpdateActive = true;
+          this.fillFormToUpdate(user);
+        });
+    });
   }
 
   onSubmit() {
@@ -99,5 +115,33 @@ export class CreateRegistrationComponent implements OnInit {
         this.registrationForm.controls['bmiResult'].patchValue("Obese");
         break;
     }
+  }
+
+  fillFormToUpdate(user: User) {
+    this.registrationForm.setValue({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      mobile: user.mobile,
+      weight: user.weight,
+      height: user.height,
+      bmi: user.bmi,
+      bmiResult: user.bmiResult,
+      gender: user.gender,
+      requireTrainer: user.requireTrainer,
+      package: user.package,
+      important: user.important,
+      haveGymBefore: user.haveGymBefore,
+      enquiryDate: user.enquiryDate
+    });
+  }
+
+  onUpdate() {
+    this.apiService.updateRegisteredUser(this.registrationForm.value, this.userIdToUpdate)
+      .subscribe(res => {
+        this.toastService.success({detail: "Success", summary: "Enquiry Updated", duration: 3000});
+        this.registrationForm.reset();
+        this.router.navigate(['list']);
+      });
   }
 }

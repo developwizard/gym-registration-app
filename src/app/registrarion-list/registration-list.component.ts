@@ -8,6 +8,7 @@ import {User} from "../models/user.model";
 import {ApiService} from "../services/api.service";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
+import {Router, RouterModule} from "@angular/router";
 
 @Component({
   selector: 'app-registration-list',
@@ -21,7 +22,8 @@ import {MatIconModule} from "@angular/material/icon";
     MatInputModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    RouterModule
   ]
 })
 export class RegistrationListComponent implements OnInit {
@@ -42,7 +44,7 @@ export class RegistrationListComponent implements OnInit {
     'action'
   ];
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private router: Router) {
   }
 
   ngOnInit() {
@@ -66,5 +68,9 @@ export class RegistrationListComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  onEditClick(id: number) {
+    this.router.navigate(['update', id]);
   }
 }
