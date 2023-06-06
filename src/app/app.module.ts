@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CreateRegistrationComponent} from './create-registrarion/create-registration.component';
-import {RegistrarionListComponent} from './registrarion-list/registrarion-list.component';
+import {RegistrationListComponent} from './registrarion-list/registration-list.component';
 import {UserDetailComponent} from './user-detail/user-detail.component';
 import {NgToastModule} from "ng-angular-popup";
 import {NgConfirmModule} from "ng-confirm-box";
@@ -30,7 +30,7 @@ import {HttpClientModule} from "@angular/common/http";
     MatToolbarModule,
     NgConfirmModule,
     NgToastModule,
-    RegistrarionListComponent,
+    RegistrationListComponent,
     UserDetailComponent,
     RouterModule
   ],

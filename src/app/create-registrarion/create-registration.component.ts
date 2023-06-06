@@ -13,7 +13,7 @@ import {ApiService} from "../services/api.service";
 import {NgToastModule, NgToastService} from "ng-angular-popup";
 
 @Component({
-  selector: 'app-create-registrarion',
+  selector: 'app-create-registration',
   templateUrl: './create-registration.component.html',
   styleUrls: ['./create-registration.component.css'],
   standalone: true,
