@@ -11,7 +11,7 @@ export class User {
   gender!: string;
   requireTrainer!: string;
   package!: string;
-  important!: string;
+  important!: string[];
   haveGymBefore!: string;
   enquiryDate!: string;
 }

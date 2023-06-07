@@ -1,0 +1,10 @@
+.card {
+  max-width: 400px;
+  display: block;
+  margin: 0 auto;
+}
+
+.header-image {
+  background-image: url('https://www.gowpala.org/assets/uploads/testimonials/default.jpg');
+  background-size: cover;
+}
