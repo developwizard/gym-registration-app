@@ -9,6 +9,8 @@ import {ApiService} from "../services/api.service";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {Router, RouterModule} from "@angular/router";
+import {NgConfirmModule, NgConfirmService} from "ng-confirm-box";
+import {NgToastModule, NgToastService} from "ng-angular-popup";
 
 @Component({
   selector: 'app-registration-list',
@@ -23,6 +25,8 @@ import {Router, RouterModule} from "@angular/router";
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
+    NgConfirmModule,
+    NgToastModule,
     RouterModule
   ]
 })
@@ -44,7 +48,10 @@ export class RegistrationListComponent implements OnInit {
     'action'
   ];
 
-  constructor(private api: ApiService, private router: Router) {
+  constructor(private api: ApiService,
+              private ngConfirmService: NgConfirmService,
+              private router: Router,
+              private toastService: NgToastService) {
   }
 
   ngOnInit() {
@@ -72,5 +79,18 @@ export class RegistrationListComponent implements OnInit {
 
   onEditClick(id: number) {
     this.router.navigate(['update', id]);
+  }
+
+  onDelete(id: number) {
+    this.ngConfirmService.showConfirm("Are you sure want to delete?",
+      () => {
+        this.api.deleteRegisteredUser(id).subscribe(_ => {
+          this.toastService.success({detail: 'Success', summary: 'Deleted Successfully', duration: 3000});
+          this.getUsers();
+        });
+      },
+      () => {
+
+      });
   }
 }
